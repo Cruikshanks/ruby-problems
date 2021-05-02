@@ -1,0 +1,34 @@
+AllCops:
+  # Cop names are not displayed in offense messages by default. We find it useful to include this information so we can
+  # use it to investigate what the fix may be.
+  DisplayCopNames: true
+  # Style guide URLs are not displayed in offense messages by default. Again we find it useful to go straight to the
+  # documentation for a rule when investigating what the fix may be.
+  DisplayStyleGuide: true
+  # Starting in 0.80 new cops are no longer enabled by default. It was noted that when ever rubocop updated and new cops
+  # were added, project builds generally always broke. To resolve this the rubocop team have decided that projects now
+  # need to specify whether new cops are disabled or enabled and if not, they will omit a warning message. Though it
+  # generally does break our builds, we want to always be using the latest conventions and will deal with build issues
+  # as they arise. So we set this flag so rubocop will just mark any new cops as enabled and saving us having to dip in
+  # each time and enable them one-by-one
+  NewCops: enable
+
+# Normally these would not be disabled. But often for the purposes of the test everything is going into one method. It's
+# not always a requirement but to keep the solutions consistent it is what I have stuck too. Because of this they'll
+# often cause these issues to be raised.
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# Often the method signature is copied from the source problem and they have a bad habit of using single char names and
+# predicates (is_, get_)! I keep the signature and naming to be consistent but this quite rightly is a red flag to
+# rubocop
+Naming/MethodParameterName:
+  Enabled: false
+Naming/PredicateName:
+  Enabled: false

@@ -12,20 +12,20 @@
 # @param {Integer} x
 # @return {Boolean}
 def is_palindrome_string(x)
-  return x.to_s == x.to_s.reverse
+  x.to_s == x.to_s.reverse
 end
 
 def is_palindrome(x)
   # -121 when read backward is 121-. So, any negative number is not a palindrome
-  return false if x < 0
+  return false if x.negative?
   # Another edge case. If the last digit of x is 0 then in order to be a palindrome the first digit of x must also be a
   # 0, which of course it won't be for a number!
-  return false if x % 10 == 0 && x != 0
+  return false if (x % 10).zero? && x != 0
 
   # We can only return a result if its in the integer range cited (-2 to power of 31 to 2 to power of 31 -1). So, first
   # we determine what those values are (note - ** is Ruby's operator for exponentiation)
-  max = 2 ** 31 -1
-  min = -2 ** 31
+  max = 2**31 - 1
+  min = -2**31
 
   rev = 0
   count = 1
@@ -43,8 +43,8 @@ def is_palindrome(x)
     return 0 if rev > max / 10 || (rev == max / 10 && pop > 7)
     return 0 if rev < min / 10 || (rev == min / 10 && pop < -8)
 
-    # Finally we 'push' the last digit onto our new number. On the first pass we'd have 0 * 10 + 1 = 1. On the second it would
-    # be 1 * 10 + 2 = 12. We skip the last one because now x = 1 and rev = 12
+    # Finally we 'push' the last digit onto our new number. On the first pass we'd have 0 * 10 + 1 = 1. On the second it
+    # would be 1 * 10 + 2 = 12. We skip the last one because now x = 1 and rev = 12
     rev = rev * 10 + pop
   end
 
@@ -52,15 +52,15 @@ def is_palindrome(x)
   # backwards in an odd number we know the middle one will always be the same (2 in this case). So, we 'get rid' of the
   # 2 by dividing rev by 10 which leaves 1 (because in ruby integer division always results in an integer result).
   # This the translates as (false || true) == true
-  return x == rev || x == rev / 10
+  x == rev || x == rev / 10
 end
 
 tests = [
   { input: 121, output: true },
-  # { input: -121, output: false },
-  # { input: 10, output: false },
-  # { input: -101, output: false },
-  # { input: 1234567899, output: false }
+  { input: -121, output: false },
+  { input: 10, output: false },
+  { input: -101, output: false },
+  { input: 1_234_567_899, output: false }
 ]
 
 puts 'Reverse string version'
